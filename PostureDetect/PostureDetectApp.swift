@@ -11,7 +11,8 @@ import SwiftUI
 struct PostureDetectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            SessionView()
         }
     }
 }
