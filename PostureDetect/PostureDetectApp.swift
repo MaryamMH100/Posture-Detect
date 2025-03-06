@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
-
+import SwiftData
 @main
-struct PostureDetectApp: App {
+struct MyApp: App {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                HomeView()
+            } else {
+                PreferencesView()
+            }
         }
+        .modelContainer(for: UserPreferences.self) // تهيئة SwiftData
     }
 }
