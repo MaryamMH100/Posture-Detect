@@ -13,7 +13,7 @@ struct ContentView: View {
             Image(systemName: "star")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("github test")
+            Text("session view")
         }
         .padding()
     }
