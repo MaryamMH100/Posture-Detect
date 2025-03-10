@@ -112,18 +112,18 @@ struct ExerciseListView: View {
             if viewModel.isFinished { // Show "End" if exercises are finished
                 Text (category.name).font(.title)
               
-                Text("\(category.time) Min")
+                Text("\(category.time) Seconds")
                     .font(.title2)
-                Image("Eyes").resizable().scaledToFit().frame(height: 350)
+                Image("ExercisesDone").resizable().scaledToFit().frame(height: 350)
 //                    .font(.title)
 //                    .foregroundColor(.red)
                     .padding()
             } else if !viewModel.isActive { // Show "Start" only if timer is not active
                 Text (category.name).font(.title)
                 
-                Text("\(category.time) Min")
+                Text("\(category.time) Seconds")
                     .font(.title2)
-                Image("Neck").resizable().scaledToFit().frame(height: 350)
+                Image(category.image).resizable().scaledToFit().frame(height: 350)
                 //                    .font(.title)
                 //                    .foregroundColor(.green)
                     .padding()
@@ -167,16 +167,29 @@ struct ExerciseListView: View {
 struct ContentView: View {
     let categories = [
         ExerciseCategory(name: "Neck Stretch", exercises: [
-                        Exercise(name: "Neck Stretch Left", duration: 20, image: "Neck"),
-                        Exercise(name: "Neck Stretch Right", duration: 20, image: "Neck"),
-                        Exercise(name: "Neck Rotation", duration: 15, image: "Neck")
-        ], image: "Neck", time: 1),
-        ExerciseCategory(name: "Back Stretch", exercises: [Exercise(name: "Right Back Stretch", duration: 30, image: "back"),Exercise(name: "Left Back Stretch", duration: 30, image: "back")], image: "Back",time: 2),
-        ExerciseCategory(name: "Shoulders Stretch", exercises: [Exercise(name: "Right Shoulders Stretch", duration: 30, image: "Shoulders"),Exercise(name: "Left Shoulders Stretch", duration: 30, image: "Shoulders")], image: "Shoulders",time: 3),
+                        Exercise(name: "Left Neck Stretch", duration: 15, image: "LeftNeckExercise"),
+                        Exercise(name: "Right Neck Stretch", duration: 15, image: "RightNeckExercise"),
+                        Exercise(name: "Forward Neck Stretch", duration: 15, image: "DownNeckExercise"),
+                        Exercise(name: "Upward Neck Stretch", duration: 15, image: "UpNeckExercise")
+        ], image: "Neck", time: 60),
+        
+        
+        ExerciseCategory(name: "Back Stretch", exercises: [
+            Exercise(name: "Back Stretch", duration: 20, image: "BackExercise")], image: "Back",time: 20),
+        
         ExerciseCategory(name: "Eyes Exercise", exercises: [
-                        Exercise(name: "Right Eye Focus", duration: 30, image: "Eyes"),
-                        Exercise(name: "Left Eye Focus", duration: 30, image: "Eyes")
-                    ], image: "Eyes", time: 4)
+                        Exercise(name: "Far Away Focus", duration: 20, image: "LookFarAwayEyeExercise"),
+                        Exercise(name: " Circular Motion Exercise", duration: 20, image: "EyeCircularMotionExercise"),
+                        Exercise(name: "Blink Eye Exercise", duration: 20, image: "BlinkEyeExercise")
+                    ], image: "Eyes", time: 60),
+        
+        ExerciseCategory(name: "Shoulders Stretch", exercises: [Exercise(name: "Right Shoulders Stretch", duration: 15, image: "Shoulders1"),
+            Exercise(name: "Left Shoulders Stretch", duration: 15, image: "Shoulders2"),
+            Exercise(name: "Right Shoulders Stretch", duration: 15, image: "Shoulders3"),
+            Exercise(name: "Left Shoulders Stretch", duration: 15, image: "Shoulders4"),
+            Exercise(name: "Right Triceps Stretch", duration: 15, image: "Shoulders6"),
+            Exercise(name: "Left Triceps Stretch", duration: 15, image: "Shoulders5")]
+        , image: "Shoulders",time: 90)
     ]
 
     var body: some View {
@@ -213,7 +226,7 @@ struct ContentView: View {
                                                 //.padding(.horizontal)
                                                 //.padding(.trailing,130)
                                             
-                                            Text("\(category.time) Min")
+                                            Text("\(category.time) Seconds")
                                                 .font(.title3)
                                                 //.font(.subheadline)
                                                 //.font(.largeTitle)
