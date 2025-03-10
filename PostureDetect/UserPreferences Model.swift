@@ -16,9 +16,9 @@ class UserPreferences {
     var isExerciseEnabled: Bool
     var isBreakEnabled: Bool
     
-    init(startTime: String = "1:30 PM",
-         endTime: String = "1:00 PM",
-         notificationFrequency: String = "Every 20 min",
+    init(startTime: String = "",
+         endTime: String = "",
+         notificationFrequency: String = "",
          isExerciseEnabled: Bool = true,
          isBreakEnabled: Bool = false) {
         self.startTime = startTime
@@ -28,3 +28,4 @@ class UserPreferences {
         self.isBreakEnabled = isBreakEnabled
     }
 }
+
