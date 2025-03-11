@@ -66,21 +66,23 @@ struct SessionView: View {
 
                 Spacer(minLength: 70)
 
-                Button {
-                    // exercises screen
-                } label: {
-                    HStack {
-                        Text("Exercises")
-                            .foregroundColor(.white)
+                NavigationLink(destination: ExerciseView()) {
+                                      Button {
+                                          // Action for Exercises button if needed
+                                      } label: {
+                                          HStack {
+                                              Text("Exercises")
+                                                  .foregroundColor(.white)
 
-                        Image(systemName: "figure.cooldown")
-                            .foregroundColor(.white)
-                    }
-                    .frame(width: 120, height: 30)
-                }
-                .background(Color("lightGreen"))
-                .cornerRadius(5)
-                .padding()
+                                              Image(systemName: "figure.cooldown")
+                                                  .foregroundColor(.white)
+                                          }
+                                          .frame(width: 120, height: 30)
+                                      }
+                                      .background(Color("lightGreen"))
+                                      .cornerRadius(5)
+                                      .padding()
+                                  }
             }
             
             Spacer(minLength: 20)
