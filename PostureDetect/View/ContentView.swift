@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+
     var body: some View {
-        VStack {
-            Image(systemName: "star")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("session view")
-        }
-        .padding()
+        
+        Text("Addel App")
     }
 }
+
 
 #Preview {
     ContentView()

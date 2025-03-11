@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct SessionView: View {
     @State private var selectedTime: Double = 0 // Default to 1 minute
     @State private var timeRemaining: Double = 0 // Default to 1 minute
     @State private var timerRunning = false
     @State private var timer: Timer?
+    
+    @State private var isMonitoring = false
+       @StateObject private var cameraManager: CameraManager
+    
+    @State private var cameraPermissionDenied = false // Track permission status
+       
+       init() {
+           let appDelegate = NSApp.delegate as? AppDelegate
+           _cameraManager = StateObject(wrappedValue: CameraManager())
+       }
 
     var body: some View {
         VStack {
@@ -60,20 +71,34 @@ struct SessionView: View {
             }
             
             Spacer(minLength: 20)
+            
+            // ** Warning text if camera permission is denied **
+                       if cameraPermissionDenied {
+                           Text("⚠ Camera access is required to track your posture.")
+                               .foregroundColor(.red)
+                               .font(.title)
+                               .padding()
+                       }
+            
+            Spacer(minLength: 20)
 
             // Circular Slider
             CircularSlider(selectedTime: $selectedTime, timeRemaining: $timeRemaining, timerRunning: $timerRunning)
-                .frame(width: 400, height: 400)
+                .frame(width: 450, height: 450)
 
             Spacer(minLength: 20)
 
             // Timer Controls
             HStack {
                 Button(action: {
+
+                    
                     timer?.invalidate()
                     timerRunning = false
                     timeRemaining = 0
                     selectedTime = 0// Reset to selected time
+                    cameraManager.stopCamera() // إيقاف الكاميرا
+                    
                 }) {
                     ZStack {
                         Circle()
@@ -82,7 +107,7 @@ struct SessionView: View {
 
                         Text("Cancel")
                             .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(timerRunning ? .black : .gray)
                     }
                 }
                 .cornerRadius(100)
@@ -91,6 +116,13 @@ struct SessionView: View {
                 Spacer(minLength: 48)
 
                 Button(action: {
+                    
+                    isMonitoring.toggle()
+                        if isMonitoring {
+                            print("Starting camera monitoring...")
+                            cameraManager.startCamera(withDuration: 30 * 60)
+                        }
+                    
                     if timerRunning {
                         timer?.invalidate()
                         timerRunning = false
@@ -103,20 +135,23 @@ struct SessionView: View {
                             } else {
                                 timer?.invalidate()
                                 timerRunning = false
+                                cameraManager.stopCamera() // Stop camera when time reaches 0
+                                               isMonitoring = false
                             }
                         }
                     }
                 }) {
                     ZStack {
                         Circle()
-                            .foregroundColor(Color("lightGreen"))
+                            .foregroundColor(cameraPermissionDenied ? Color("disabledGreen") : Color("lightGreen") )
                             .frame(width: 100, height: 100)
 
                         Text(timerRunning ? "Pause" : "Start")
                             .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(cameraPermissionDenied ? .gray : .white)
                     }
                 }
+                .disabled(cameraPermissionDenied)
                 .cornerRadius(100)
             }
             .frame(width: 388, height: 101)
@@ -125,7 +160,17 @@ struct SessionView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("BackgroundColor"))
+        .onAppear {
+                    checkCameraPermission() // Check camera access when view appears
+                }
     }
+    
+    private func checkCameraPermission() {
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            DispatchQueue.main.async {
+                self.cameraPermissionDenied = (status == .denied || status == .restricted)
+            }
+        }
 }
 
 #Preview {
