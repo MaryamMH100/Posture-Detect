@@ -10,6 +10,7 @@ import SwiftData
 struct MyApp: App {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("hasSetPreferences") private var hasSetPreferences = false
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
@@ -18,7 +19,7 @@ struct MyApp: App {
             } else if !hasSetPreferences {
                 PreferencesView(isOnboarding: true) // الانتقال إلى PreferencesView
             } else {
-                HomeView() // الصفحة الرئيسية
+                SessionView() // الصفحة الرئيسية
             }
         }
         .modelContainer(for: UserPreferences.self) // تهيئة SwiftData

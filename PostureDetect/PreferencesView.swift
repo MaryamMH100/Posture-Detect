@@ -20,11 +20,14 @@ struct PreferencesView: View {
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
-    @AppStorage("hasSetPreferences") private var hasCompletedPreferences = false
+    @AppStorage("hasSetPreferences") private var hasSetPreferences = false
     @Environment(\.dismiss) private var dismiss // لإغلاق الـ sheet
     @State private var isFirstTime = true
-    @State private var navigateToHomeView = false
+    @State private var navigateToSessionView = false
     var isOnboarding: Bool // معامل لتحديد الوضع
+    @State private var showPreferences = false
+//    @Query private var preferences: [UserPreferences]
+
 
     let timeOptions = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]
     
@@ -48,8 +51,8 @@ struct PreferencesView: View {
                     
                     if isFirstTime {
                         Button("Skip") {
-                            hasCompletedPreferences = true
-                            navigateToHomeView = true // الانتقال إلى HomeView دون حفظ الإعدادات
+                            hasSetPreferences = true
+                            navigateToSessionView = true // الانتقال إلى HomeView دون حفظ الإعدادات
                         }
                         .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
                         .padding(8)
@@ -161,7 +164,7 @@ struct PreferencesView: View {
                 }
                 .padding(.horizontal, 40)
                 .background(
-                    NavigationLink(destination: HomeView(), isActive: $navigateToHomeView) {
+                    NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
                         EmptyView()
                     }
                 )
@@ -180,12 +183,12 @@ struct PreferencesView: View {
                 }
        
         .onDisappear {
-            if !navigateToHomeView {
+            if !navigateToSessionView {
                 savePreferences() // حفظ الإعدادات عند المغادرة إذا لم يتم الضغط على "X" أو "Skip"
             }
         }
         .background(
-            NavigationLink(destination: HomeView(), isActive: $navigateToHomeView) {
+            NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
                 EmptyView()
             }
         )
@@ -229,7 +232,7 @@ struct PreferencesView: View {
             modelContext.insert(newPreferences)
         }
 
-        hasCompletedPreferences = true
+        hasSetPreferences = true
         isFirstTime = false
     }
 
@@ -391,8 +394,9 @@ func requestNotificationPermission() {
     }
 }
 
+
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView(isOnboarding: true) 
+        PreferencesView(isOnboarding: true)
     }
 }
