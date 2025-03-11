@@ -10,9 +10,22 @@
 		ECEDB3012D6DC0D40040BDE1 /* PostureDetect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostureDetect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EC5814062D7B93B60068EDAB /* Exceptions for "PostureDetect" folder in "PostureDetect" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = ECEDB3002D6DC0D40040BDE1 /* PostureDetect */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		ECEDB3032D6DC0D40040BDE1 /* PostureDetect */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EC5814062D7B93B60068EDAB /* Exceptions for "PostureDetect" folder in "PostureDetect" target */,
+			);
 			path = PostureDetect;
 			sourceTree = "<group>";
 		};
@@ -248,16 +261,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = PostureDetect/PostureDetect.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = 65SC85U354;
+				DEVELOPMENT_TEAM = 4YDHCL9RDP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PostureDetect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "عدِّل";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to detect your posture.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -276,16 +293,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = PostureDetect/PostureDetect.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = 65SC85U354;
+				DEVELOPMENT_TEAM = 4YDHCL9RDP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PostureDetect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "عدِّل";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to detect your posture.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
