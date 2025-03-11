@@ -67,7 +67,7 @@ struct ExerciseView: View {
                                             Text(category.name)
                                                 .font(.title2)
                                                 //.font(.headline)
-                                                .foregroundColor(.primary)
+                                                .foregroundColor(.black)
                                                 .padding(.top,10)
                                                 //.padding(.horizontal)
                                                 //.padding(.trailing,130)

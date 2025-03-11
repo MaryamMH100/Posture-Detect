@@ -31,7 +31,7 @@ struct SessionView: View {
        }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack {
                     Button(action: {
@@ -82,8 +82,8 @@ struct SessionView: View {
                         }
                         .background(Color("lightGreen"))
                         .cornerRadius(5)
-                        .padding()
-                    }
+                        .padding().background(Color("lightGreen"))
+                    }.buttonStyle(PlainButtonStyle())
                 }
                 
                 Spacer(minLength: 20)
