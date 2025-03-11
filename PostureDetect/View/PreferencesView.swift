@@ -88,7 +88,7 @@ struct PreferencesView: View {
                                     Spacer()
                                     Picker("Start", selection: $startTime) {
                                         ForEach(timeOptions, id: \.self) { time in
-                                            Text(time)
+                                            Text(time).foregroundColor(.black)
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
@@ -98,7 +98,7 @@ struct PreferencesView: View {
 
                                     Picker("End", selection: $endTime) {
                                         ForEach(filteredEndTimeOptions, id: \.self) { time in
-                                            Text(time)
+                                            Text(time).foregroundColor(.black)
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
