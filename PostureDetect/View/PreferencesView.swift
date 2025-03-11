@@ -110,7 +110,7 @@ struct PreferencesView: View {
                                     Spacer()
                                     Picker("", selection: $notificationFrequency) {
                                         ForEach(notificationOptions, id: \.self) { option in
-                                            Text(option)
+                                            Text(option).foregroundColor(.black)
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
