@@ -15,13 +15,16 @@ struct PreferencesView: View {
     @Query private var preferences: [UserPreferences]
     @State private var startTime = "9:00 AM"
     @State private var endTime = "5:00 PM"
+    @State private var filteredEndTimeOptions: [String] = []
+
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @Environment(\.presentationMode) var presentationMode
+    @AppStorage("hasSetPreferences") private var hasCompletedPreferences = false
+    @Environment(\.dismiss) private var dismiss // لإغلاق الـ sheet
     @State private var isFirstTime = true
-    @State private var navigateToHomeView = false // متغير للتحكم في الانتقال إلى HomeView
+    @State private var navigateToHomeView = false
+    var isOnboarding: Bool // معامل لتحديد الوضع
 
     let timeOptions = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]
     
@@ -29,17 +32,23 @@ struct PreferencesView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture { presentationMode.wrappedValue.dismiss() }
+                 if isOnboarding {
+                     Color.black.opacity(0.3)
+                         .edgesIgnoringSafeArea(.all)
+                         .onTapGesture { dismiss() }
+                 }
+
 
             VStack(alignment: .leading, spacing: 20) {
+           
+                
                 HStack {
                     Text("Preferences").font(.largeTitle).bold()
                     Spacer()
+                    
                     if isFirstTime {
                         Button("Skip") {
-                            hasCompletedOnboarding = true
+                            hasCompletedPreferences = true
                             navigateToHomeView = true // الانتقال إلى HomeView دون حفظ الإعدادات
                         }
                         .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
@@ -47,15 +56,19 @@ struct PreferencesView: View {
                         .background(Color.white.opacity(0.8))
                         .cornerRadius(8)
                         .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
+                    } else {
+                        Button(action: {
+                            dismiss() // إغلاق الشيت دون حفظ الإعدادات
+                        }) {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
+                                .padding(8)
+                                .background(Color.white.opacity(0.8))
+                                .clipShape(Circle())
+                                .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
+                        }
                     }
-//                    if else
-//                        Button(System image:"x.circle.fill"){
-//                        hasCompletedOnboarding = fales
-//                        navigateToHome = true
-//
-//
-//                    }
-                        
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
@@ -76,22 +89,18 @@ struct PreferencesView: View {
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
-                                    .frame(width: 130)
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(8)
-                                    .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+                                    .onChange(of: startTime) { _ in
+                                        updateEndTimeOptions()
+                                    }
 
                                     Picker("End", selection: $endTime) {
-                                        ForEach(timeOptions.filter { $0 > startTime }, id: \.self) { time in
+                                        ForEach(filteredEndTimeOptions, id: \.self) { time in
                                             Text(time)
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
-                                    .frame(width: 130)
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(8)
-                                    .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
-                                }
+                                 }
+                                .onAppear(perform: loadPreferences)
 
                                 HStack {
                                     Text("Notifications frequency")
@@ -137,9 +146,9 @@ struct PreferencesView: View {
                 }
 
                 Button(action: {
-                    savePreferences()
-                    scheduleNotifications()
-                    navigateToHomeView = true // الانتقال إلى HomeView بعد حفظ الإعدادات
+                    savePreferences() // حفظ الإعدادات
+                    scheduleNotifications() // جدولة الإشعارات
+                    dismiss() // إغلاق الشيت بعد الحفظ
                 }) {
                     Text("Save")
                         .bold()
@@ -149,7 +158,6 @@ struct PreferencesView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                        .onTapGesture {}
                 }
                 .padding(.horizontal, 40)
                 .background(
@@ -164,49 +172,67 @@ struct PreferencesView: View {
             .cornerRadius(20)
             .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
         }
-     
-     .onAppear(perform: loadPreferences)
-     .onAppear {
-         requestNotificationPermission()
-     }
-     .onDisappear {
-         savePreferences() // حفظ التغييرات عند مغادرة الصفحة
-     }
- }
+        .onAppear(perform: loadPreferences)
+        .onAppear {
+            requestNotificationPermission() }
+        .onAppear {
+                    updateEndTimeOptions()
+                }
+       
+        .onDisappear {
+            if !navigateToHomeView {
+                savePreferences() // حفظ الإعدادات عند المغادرة إذا لم يتم الضغط على "X" أو "Skip"
+            }
+        }
+        .background(
+            NavigationLink(destination: HomeView(), isActive: $navigateToHomeView) {
+                EmptyView()
+            }
+        )
+    }
     
 
-    private func savePreferences() {
-        if !navigateToHomeView || !isFirstTime {
-            if let existingPreferences = preferences.first {
-                existingPreferences.startTime = startTime
-                existingPreferences.endTime = endTime
-                existingPreferences.notificationFrequency = notificationFrequency
-                existingPreferences.isExerciseEnabled = isExerciseEnabled
-                existingPreferences.isBreakEnabled = isBreakEnabled
-            } else {
-                let newPreferences = UserPreferences(
-                    startTime: startTime,
-                    endTime: endTime,
-                    notificationFrequency: notificationFrequency,
-                    isExerciseEnabled: isExerciseEnabled,
-                    isBreakEnabled: isBreakEnabled
-                )
-                modelContext.insert(newPreferences)
+
+    private func updateEndTimeOptions() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+
+        if let startDate = dateFormatter.date(from: startTime) {
+            filteredEndTimeOptions = timeOptions.filter { timeString in
+                if let timeDate = dateFormatter.date(from: timeString) {
+                    return timeDate > startDate
+                }
+                return false
             }
 
-            hasCompletedOnboarding = true
-            isFirstTime = false
-            
-            // حفظ الإعدادات في UserDefaults
-            UserDefaults.standard.set(startTime, forKey: "startTime")
-            UserDefaults.standard.set(endTime, forKey: "endTime")
-            UserDefaults.standard.set(notificationFrequency, forKey: "notificationFrequency")
-            UserDefaults.standard.set(isExerciseEnabled, forKey: "isExerciseEnabled")
-            UserDefaults.standard.set(isBreakEnabled, forKey: "isBreakEnabled")
-            
-            print("Preferences saved.")
+            if let firstAvailableTime = filteredEndTimeOptions.first {
+                endTime = firstAvailableTime
+            }
         }
     }
+
+    private func savePreferences() {
+        if let existingPreferences = preferences.first {
+            existingPreferences.startTime = startTime
+            existingPreferences.endTime = endTime
+            existingPreferences.notificationFrequency = notificationFrequency
+            existingPreferences.isExerciseEnabled = isExerciseEnabled
+            existingPreferences.isBreakEnabled = isBreakEnabled
+        } else {
+            let newPreferences = UserPreferences(
+                startTime: startTime,
+                endTime: endTime,
+                notificationFrequency: notificationFrequency,
+                isExerciseEnabled: isExerciseEnabled,
+                isBreakEnabled: isBreakEnabled
+            )
+            modelContext.insert(newPreferences)
+        }
+
+        hasCompletedPreferences = true
+        isFirstTime = false
+    }
+
     private func loadPreferences() {
         if let existingPreferences = preferences.first {
             startTime = existingPreferences.startTime
@@ -216,14 +242,15 @@ struct PreferencesView: View {
             isBreakEnabled = existingPreferences.isBreakEnabled
             isFirstTime = false
         } else {
-            // تحميل الإعدادات من UserDefaults إذا لم تكن موجودة في SwiftData
             startTime = UserDefaults.standard.string(forKey: "startTime") ?? "9:00 AM"
             endTime = UserDefaults.standard.string(forKey: "endTime") ?? "5:00 PM"
             notificationFrequency = UserDefaults.standard.string(forKey: "notificationFrequency") ?? "Once"
             isExerciseEnabled = UserDefaults.standard.bool(forKey: "isExerciseEnabled")
             isBreakEnabled = UserDefaults.standard.bool(forKey: "isBreakEnabled")
+            updateEndTimeOptions()
         }
     }
+
 
     private func scheduleNotifications() {
         let center = UNUserNotificationCenter.current()
@@ -366,6 +393,6 @@ func requestNotificationPermission() {
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView()
+        PreferencesView(isOnboarding: true) 
     }
 }

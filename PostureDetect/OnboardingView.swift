@@ -5,45 +5,6 @@
 //  Created by Reema ALhudaian on 03/09/1446 AH.
 //
 
-import SwiftData
-import SwiftUI
-
-
-struct HomeView: View {
-    @State private var showPreferences = false
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("🏡 مرحبًا بك في الصفحة الرئيسية!")
-                    .font(.largeTitle)
-                    .bold()
-
-                Button(action: {
-                    showPreferences = true
-                }) {
-                    Text("⚙️ تعديل الإعدادات")
-                        .bold()
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal, 40)
-                .sheet(isPresented: $showPreferences) {
-                    PreferencesView()
-                }
-            }
-        }
-    }
-}
-
-struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingView()
-    }
-}
 
 import SwiftUI
 import SwiftData
@@ -51,11 +12,13 @@ import SwiftData
 struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     @State private var showPreferences = false
-    
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
     var body: some View {
         VStack {
             if showPreferences {
-                PreferencesView()
+                PreferencesView(isOnboarding: showPreferences)
+            
             } else {
                 ZStack {
                     // Background color applied first
