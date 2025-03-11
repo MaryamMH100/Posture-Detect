@@ -31,154 +31,155 @@ struct SessionView: View {
        }
 
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    showPreferences = true
-                }) {
-                    HStack {
-                        Text("Preferences")
-                            .foregroundColor(Color("StrokeColor"))
-
-                        Image(systemName: "slider.horizontal.3")
-                            .foregroundColor(Color("StrokeColor"))
+        NavigationView {
+            VStack {
+                HStack {
+                    Button(action: {
+                        showPreferences = true
+                    }) {
+                        HStack {
+                            Text("Preferences")
+                                .foregroundColor(Color("StrokeColor"))
+                            
+                            Image(systemName: "slider.horizontal.3")
+                                .foregroundColor(Color("StrokeColor"))
+                        }
+                        .frame(width: 120, height: 30)
                     }
-                    .frame(width: 120, height: 30)
-                }
-                .border(Color("disableButton"), width: 1)
-                .background(.white)
-                .padding()
-                .cornerRadius(5)
-                .sheet(isPresented: $showPreferences) {
-                    PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
-                }
-                .onAppear {
-                    loadPreferences() // تحميل الإعدادات عند ظهور الصفحة
-                }
-
-
-                Spacer(minLength: 70)
-
-                Text("Start the timer and track your posture")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
-
-                Spacer(minLength: 70)
-
-                NavigationLink(destination: ExerciseView()) {
-                                      Button {
-                                          // Action for Exercises button if needed
-                                      } label: {
-                                          HStack {
-                                              Text("Exercises")
-                                                  .foregroundColor(.white)
-
-                                              Image(systemName: "figure.cooldown")
-                                                  .foregroundColor(.white)
-                                          }
-                                          .frame(width: 120, height: 30)
-                                      }
-                                      .background(Color("lightGreen"))
-                                      .cornerRadius(5)
-                                      .padding()
-                                  }
-            }
-            
-            Spacer(minLength: 20)
-            
-            // ** Warning text if camera permission is denied **
-                       if cameraPermissionDenied {
-                           Text("⚠ Camera access is required to track your posture.")
-                               .foregroundColor(.red)
-                               .font(.title)
-                               .padding()
-                       }
-            
-            Spacer(minLength: 20)
-
-            // Circular Slider
-            CircularSlider(selectedTime: $selectedTime, timeRemaining: $timeRemaining, timerRunning: $timerRunning)
-                .frame(width: 450, height: 450)
-
-            Spacer(minLength: 20)
-
-            // Timer Controls
-            HStack {
-                Button(action: {
-
+                    .border(Color("disableButton"), width: 1)
+                    .background(.white)
+                    .padding()
+                    .cornerRadius(5)
+                    .sheet(isPresented: $showPreferences) {
+                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
+                    }
+                    .onAppear {
+                        loadPreferences() // تحميل الإعدادات عند ظهور الصفحة
+                    }
                     
-                    timer?.invalidate()
-                    timerRunning = false
-                    timeRemaining = 0
-                    selectedTime = 0// Reset to selected time
-                    cameraManager.stopCamera() // إيقاف الكاميرا
                     
-                }) {
-                    ZStack {
-                        Circle()
-                            .foregroundColor(Color("disableButton"))
-                            .frame(width: 100, height: 100)
-
-                        Text("Cancel")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(timerRunning ? .black : .gray)
+                    Spacer(minLength: 70)
+                    
+                    Text("Start the timer and track your posture")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                    
+                    Spacer(minLength: 70)
+                    
+                    NavigationLink(destination: ExerciseView()) {
+                        Button {
+                            // Action for Exercises button if needed
+                        } label: {
+                            HStack {
+                                Text("Exercises")
+                                    .foregroundColor(.white)
+                                
+                                Image(systemName: "figure.cooldown")
+                                    .foregroundColor(.white)
+                            }
+                            .frame(width: 120, height: 30)
+                        }
+                        .background(Color("lightGreen"))
+                        .cornerRadius(5)
+                        .padding()
                     }
                 }
-                .cornerRadius(100)
-                .disabled(!timerRunning) // Disable if timer is not running
-
-                Spacer(minLength: 48)
-
-                Button(action: {
+                
+                Spacer(minLength: 20)
+                
+                // ** Warning text if camera permission is denied **
+                if cameraPermissionDenied {
+                    Text("⚠ Camera access is required to track your posture.")
+                        .foregroundColor(.red)
+                        .font(.title)
+                        .padding()
+                }
+                
+                Spacer(minLength: 20)
+                
+                // Circular Slider
+                CircularSlider(selectedTime: $selectedTime, timeRemaining: $timeRemaining, timerRunning: $timerRunning)
+                    .frame(width: 450, height: 450)
+                
+                Spacer(minLength: 20)
+                
+                // Timer Controls
+                HStack {
+                    Button(action: {
+                        
+                        
+                        timer?.invalidate()
+                        timerRunning = false
+                        timeRemaining = 0
+                        selectedTime = 0// Reset to selected time
+                        cameraManager.stopCamera() // إيقاف الكاميرا
+                        
+                    }) {
+                        ZStack {
+                            Circle()
+                                .foregroundColor(Color("disableButton"))
+                                .frame(width: 100, height: 100)
+                            
+                            Text("Cancel")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(timerRunning ? .black : .gray)
+                        }
+                    }
+                    .cornerRadius(100)
+                    .disabled(!timerRunning) // Disable if timer is not running
                     
-                    isMonitoring.toggle()
+                    Spacer(minLength: 48)
+                    
+                    Button(action: {
+                        
+                        isMonitoring.toggle()
                         if isMonitoring {
                             print("Starting camera monitoring...")
                             cameraManager.startCamera(withDuration: 30 * 60)
                         }
-                    
-                    if timerRunning {
-                        timer?.invalidate()
-                        timerRunning = false
-                    } else {
-                        timeRemaining = selectedTime // Reset to selected time
-                        timerRunning = true
-                        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                            if timeRemaining > 0 {
-                                timeRemaining -= 1 / 60 // Decrement by 1 second (1/60 of a minute)
-                            } else {
-                                timer?.invalidate()
-                                timerRunning = false
-                                cameraManager.stopCamera() // Stop camera when time reaches 0
-                                               isMonitoring = false
+                        
+                        if timerRunning {
+                            timer?.invalidate()
+                            timerRunning = false
+                        } else {
+                            timeRemaining = selectedTime // Reset to selected time
+                            timerRunning = true
+                            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                                if timeRemaining > 0 {
+                                    timeRemaining -= 1 / 60 // Decrement by 1 second (1/60 of a minute)
+                                } else {
+                                    timer?.invalidate()
+                                    timerRunning = false
+                                    cameraManager.stopCamera() // Stop camera when time reaches 0
+                                    isMonitoring = false
+                                }
                             }
                         }
+                    }) {
+                        ZStack {
+                            Circle()
+                                .foregroundColor(cameraPermissionDenied ? Color("disabledGreen") : Color("lightGreen") )
+                                .frame(width: 100, height: 100)
+                            
+                            Text(timerRunning ? "Pause" : "Start")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(cameraPermissionDenied ? .gray : .white)
+                        }
                     }
-                }) {
-                    ZStack {
-                        Circle()
-                            .foregroundColor(cameraPermissionDenied ? Color("disabledGreen") : Color("lightGreen") )
-                            .frame(width: 100, height: 100)
-
-                        Text(timerRunning ? "Pause" : "Start")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(cameraPermissionDenied ? .gray : .white)
-                    }
+                    .disabled(cameraPermissionDenied)
+                    .cornerRadius(100)
                 }
-                .disabled(cameraPermissionDenied)
-                .cornerRadius(100)
+                .frame(width: 388, height: 101)
+                
+                Spacer(minLength: 70)
             }
-            .frame(width: 388, height: 101)
-
-            Spacer(minLength: 70)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color("BackgroundColor"))
+            .onAppear {
+                checkCameraPermission() // Check camera access when view appears
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("BackgroundColor"))
-        .onAppear {
-                    checkCameraPermission() // Check camera access when view appears
-                }
-      
         
     }
     
