@@ -75,7 +75,7 @@ struct PreferencesView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Session").font(.headline).bold()
+                    Text("Session").font(.headline).bold().foregroundColor(.black)
 
                     RoundedRectangle(cornerRadius: 15)
                         .fill(Color.white)
@@ -84,7 +84,7 @@ struct PreferencesView: View {
                         .overlay(
                             VStack(spacing: 15) {
                                 HStack {
-                                    Text("Work hours")
+                                    Text("Work hours").foregroundColor(.black)
                                     Spacer()
                                     Picker("Start", selection: $startTime) {
                                         ForEach(timeOptions, id: \.self) { time in
@@ -106,7 +106,7 @@ struct PreferencesView: View {
                                 .onAppear(perform: loadPreferences)
 
                                 HStack {
-                                    Text("Notifications frequency")
+                                    Text("Notifications frequency").foregroundColor(.black)
                                     Spacer()
                                     Picker("", selection: $notificationFrequency) {
                                         ForEach(notificationOptions, id: \.self) { option in
@@ -125,7 +125,7 @@ struct PreferencesView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("General").font(.headline).bold()
+                    Text("General").font(.headline).bold().foregroundColor(.black)
                     RoundedRectangle(cornerRadius: 15)
                         .fill(Color.white)
                         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
@@ -133,13 +133,13 @@ struct PreferencesView: View {
                         .overlay(
                             VStack(spacing: 15) {
                                 HStack {
-                                    Text("Exercise")
+                                    Text("Exercise").foregroundColor(.black)
                                     Spacer()
                                     CustomToggle(isOn: $isExerciseEnabled, activeColor: Color(red: 0.3, green: 0.44, blue: 0.27))
                                 }
 
                                 HStack {
-                                    Text("Break")
+                                    Text("Break").foregroundColor(.black)
                                     Spacer()
                                     CustomToggle(isOn: $isBreakEnabled, activeColor: Color(red: 0.3, green: 0.44, blue: 0.27))
                                 }
