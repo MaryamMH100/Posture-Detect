@@ -68,9 +68,7 @@ struct SessionView: View {
                     Spacer(minLength: 70)
                     
                     NavigationLink(destination: ExerciseView()) {
-                        Button {
-                            // Action for Exercises button if needed
-                        } label: {
+                        
                             HStack {
                                 Text("Exercises")
                                     .foregroundColor(.white)
@@ -79,10 +77,10 @@ struct SessionView: View {
                                     .foregroundColor(.white)
                             }
                             .frame(width: 120, height: 30)
-                        }
+                        .buttonStyle(PlainButtonStyle())
                         .background(Color("lightGreen"))
                         .cornerRadius(5)
-                        .padding().background(Color("lightGreen"))
+                        .padding()
                     }.buttonStyle(PlainButtonStyle())
                 }
                 
