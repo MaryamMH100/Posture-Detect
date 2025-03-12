@@ -13,7 +13,9 @@ struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     @State private var showPreferences = false
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @State static private var showPreferences = true // تم تعريف الحالة هنا
+//    @State static private var showPreferences = true // تم تعريف الحالة هنا
+    @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
+
 
     var body: some View {
         VStack {

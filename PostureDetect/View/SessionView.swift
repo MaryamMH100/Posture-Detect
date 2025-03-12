@@ -16,7 +16,7 @@ struct SessionView: View {
     @State private var timer: Timer?
     @State private var isMonitoring = false
     @StateObject private var cameraManager: CameraManager
-    @State static private var showPreferences = true // تم تعريف الحالة هنا
+    // تم تعريف الحالة هنا
     @State private var cameraPermissionDenied = false // Track permission status
     @State private var showPreferences = false
     @Query private var preferences: [UserPreferences]
@@ -25,6 +25,7 @@ struct SessionView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
 //    @State private var navigateToSessionView = true
+    
     
     init() {
         let appDelegate = NSApp.delegate as? AppDelegate
@@ -52,22 +53,15 @@ struct SessionView: View {
                     .padding()
                     .cornerRadius(5)
                     .sheet(isPresented: $showPreferences) {
-//                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
-                        PreferencesView(showPreferences: $showPreferences, isOnboarding: false) // تم تمرير Binding<Bool>
-
-                    }
-                    .onAppear {
-                        loadPreferences() // تحميل الإعدادات عند ظهور الصفحة
-                    }
-                    .sheet(isPresented: $showPreferences) {
-//                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
-                        PreferencesView(showPreferences: $showPreferences, isOnboarding: false) // تم تمرير Binding<Bool>
-
+                        PreferencesView(showPreferences: $showPreferences, isOnboarding: false)
                             .onDisappear {
-                                // تأكد من أن الشيت قد أغلق قبل الانتقال
                                 showPreferences = false
                             }
                     }
+                    .onAppear {
+                        loadPreferences()
+                    }
+                
                     
                     Spacer(minLength: 70)
                     

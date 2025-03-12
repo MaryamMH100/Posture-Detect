@@ -4,7 +4,6 @@
 //
 //  Created by Reema ALhudaian on 06/09/1446 AH.
 //
-
 import Foundation
 import SwiftUI
 import SwiftData
@@ -16,9 +15,7 @@ struct PreferencesView: View {
     @State private var startTime = "9:00 AM"
     @State private var endTime = "5:00 PM"
     @State private var filteredEndTimeOptions: [String] = []
-    @Binding var showPreferences: Bool // Binding to control the sheet visibility
-    @State static private var showPreferences = true // تم تعريف الحالة هنا
-
+    @Binding var showPreferences: Bool
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
@@ -49,27 +46,28 @@ struct PreferencesView: View {
                         if isFirstTime {
                             Button("Skip") {
                                 hasCompletedPreferences = true
+                                dismiss()
                                 navigateToSessionView = true
                             }
                             .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
                             .padding(8)
-                            .background(Color.white.opacity(0.8))
                             .cornerRadius(8)
-                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                         } else {
                             Button(action: {
                                 dismiss()
                             }) {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
+                                    .foregroundColor(Color.white)
                                     .padding(8)
-                                    .background(Color.white.opacity(0.8))
+                                    .background(Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
                                     .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
 
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Session").font(.headline).bold().foregroundColor(.black)
@@ -147,7 +145,9 @@ struct PreferencesView: View {
 
                     Button(action: {
                         savePreferences()
-                        showPreferences = false  // Close the sheet after saving
+                        hasCompletedPreferences = true
+                        dismiss()
+                        navigateToSessionView = true
                     }) {
                         Text("Save")
                             .bold()
@@ -158,17 +158,15 @@ struct PreferencesView: View {
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding()
-            
-                            
-            .padding()
                 .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
             }
-        }
+       
         .onAppear(perform: loadPreferences)
         .onAppear {
             requestNotificationPermission()
@@ -176,14 +174,14 @@ struct PreferencesView: View {
         .onAppear {
             updateEndTimeOptions()
         }
-        .onDisappear {
-            if !navigateToSessionView {
-                savePreferences()
+        .navigationBarBackButtonHidden(isFirstTime)
+        .background(
+            NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
+                EmptyView()
             }
-        }
-        .navigationBarBackButtonHidden(isFirstTime) // إخفاء زر الرجوع بعد onboarding
-        }
-
+        )
+    }
+    }
     private func updateEndTimeOptions() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
@@ -203,7 +201,6 @@ struct PreferencesView: View {
     }
 
     private func savePreferences() {
-        // تأكد من أن التحديث يتم عبر `SwiftData`
         if let existingPreferences = preferences.first {
             existingPreferences.startTime = startTime
             existingPreferences.endTime = endTime
@@ -222,8 +219,8 @@ struct PreferencesView: View {
         }
         
         do {
-            try modelContext.save()  // حفظ البيانات
-            hasCompletedPreferences = true  // تم حفظ التفضيلات
+            try modelContext.save()
+            hasCompletedPreferences = true
         } catch {
             print("Error saving preferences: \(error.localizedDescription)")
         }
@@ -339,7 +336,6 @@ struct PreferencesView: View {
     }
 }
 
-
 struct CustomToggle: View {
     @Binding var isOn: Bool
     var activeColor: Color
@@ -375,9 +371,9 @@ func requestNotificationPermission() {
 }
 
 struct PreferencesView_Previews: PreviewProvider {
-    @State static private var showPreferences = true // تم تعريف الحالة هنا
+    @State static private var showPreferences = true
     
     static var previews: some View {
-        PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
+        PreferencesView(showPreferences: $showPreferences, isOnboarding: true)
     }
 }
