@@ -53,23 +53,28 @@ struct PreferencesView: View {
                             }
                             .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
                             .padding(8)
-                            .background(Color.white.opacity(0.8))
+//                            .background(Color.white.opacity(0.8))
                             .cornerRadius(8)
-                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
+//                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                         } else {
                             Button(action: {
                                 dismiss()
                             }) {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
-                                    .padding(8)
-                                    .background(Color.white.opacity(0.8))
+                                    .foregroundColor(Color.white)
+.padding(8)
+                               
+                                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
                                     .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                             }
+                            .buttonStyle(PlainButtonStyle())
+
                         }
+                        
                     }
+                    .buttonStyle(PlainButtonStyle())
 
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Session").font(.headline).bold().foregroundColor(.black)
@@ -158,6 +163,7 @@ struct PreferencesView: View {
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding()
             
