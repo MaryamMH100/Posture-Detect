@@ -6,18 +6,20 @@
 //
 import SwiftUI
 import SwiftData
+
 @main
 struct MyApp: App {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @AppStorage("hasSetPreferences") private var hasSetPreferences = false
+    @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
+    @State private var showPreferences = false  // إضافة هذه السطر لتعريف showPreferences
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
             if !hasCompletedOnboarding {
                 OnboardingView() // الصفحة الأولى: شاشة الـ Onboarding
-            } else if !hasSetPreferences {
-                PreferencesView(isOnboarding: true) // الانتقال إلى PreferencesView
+            } else if !hasCompletedPreferences {
+                PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
             } else {
                 SessionView() // الصفحة الرئيسية
             }

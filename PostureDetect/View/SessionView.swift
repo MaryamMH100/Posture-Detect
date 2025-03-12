@@ -15,21 +15,22 @@ struct SessionView: View {
     @State private var timerRunning = false
     @State private var timer: Timer?
     @State private var isMonitoring = false
-       @StateObject private var cameraManager: CameraManager
-    
+    @StateObject private var cameraManager: CameraManager
+    @State static private var showPreferences = true // تم تعريف الحالة هنا
     @State private var cameraPermissionDenied = false // Track permission status
     @State private var showPreferences = false
     @Query private var preferences: [UserPreferences]
     @Environment(\.modelContext) private var modelContext
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-     @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
-
-       init() {
-           let appDelegate = NSApp.delegate as? AppDelegate
-           _cameraManager = StateObject(wrappedValue: CameraManager())
-       }
-
+    @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
+//    @State private var navigateToSessionView = true
+    
+    init() {
+        let appDelegate = NSApp.delegate as? AppDelegate
+        _cameraManager = StateObject(wrappedValue: CameraManager())
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -51,12 +52,22 @@ struct SessionView: View {
                     .padding()
                     .cornerRadius(5)
                     .sheet(isPresented: $showPreferences) {
-                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
+//                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
+                        PreferencesView(showPreferences: $showPreferences, isOnboarding: false) // تم تمرير Binding<Bool>
+
                     }
                     .onAppear {
                         loadPreferences() // تحميل الإعدادات عند ظهور الصفحة
                     }
-                    
+                    .sheet(isPresented: $showPreferences) {
+//                        PreferencesView(isOnboarding: false) // فتح شيت الإعدادات
+                        PreferencesView(showPreferences: $showPreferences, isOnboarding: false) // تم تمرير Binding<Bool>
+
+                            .onDisappear {
+                                // تأكد من أن الشيت قد أغلق قبل الانتقال
+                                showPreferences = false
+                            }
+                    }
                     
                     Spacer(minLength: 70)
                     
@@ -69,14 +80,14 @@ struct SessionView: View {
                     
                     NavigationLink(destination: ExerciseView()) {
                         
-                            HStack {
-                                Text("Exercises")
-                                    .foregroundColor(.white)
-                                
-                                Image(systemName: "figure.cooldown")
-                                    .foregroundColor(.white)
-                            }
-                            .frame(width: 120, height: 30)
+                        HStack {
+                            Text("Exercises")
+                                .foregroundColor(.white)
+                            
+                            Image(systemName: "figure.cooldown")
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: 120, height: 30)
                         .buttonStyle(PlainButtonStyle())
                         .background(Color("lightGreen"))
                         .cornerRadius(5)
@@ -182,27 +193,29 @@ struct SessionView: View {
     }
     
     private func checkCameraPermission() {
-            let status = AVCaptureDevice.authorizationStatus(for: .video)
-            DispatchQueue.main.async {
-                self.cameraPermissionDenied = (status == .denied || status == .restricted)
-            }
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        DispatchQueue.main.async {
+            self.cameraPermissionDenied = (status == .denied || status == .restricted)
         }
+    }
     private func loadPreferences() {
+        // إذا كانت الإعدادات فارغة في SwiftData، قم بإنشاء إعدادات جديدة
         if preferences.isEmpty {
-            let startTime = UserDefaults.standard.string(forKey: "startTime") ?? "9:00 AM"
-            let endTime = UserDefaults.standard.string(forKey: "endTime") ?? "5:00 PM"
-            let notificationFrequency = UserDefaults.standard.string(forKey: "notificationFrequency") ?? "Once"
-            let isExerciseEnabled = UserDefaults.standard.bool(forKey: "isExerciseEnabled")
-            let isBreakEnabled = UserDefaults.standard.bool(forKey: "isBreakEnabled")
-            
             let newPreferences = UserPreferences(
-                startTime: startTime,
-                endTime: endTime,
-                notificationFrequency: notificationFrequency,
-                isExerciseEnabled: isExerciseEnabled,
-                isBreakEnabled: isBreakEnabled
+                startTime: "9:00 AM",  // الوقت الافتراضي
+                endTime: "5:00 PM",    // الوقت الافتراضي
+                notificationFrequency: "Once",  // الافتراضي
+                isExerciseEnabled: true,  // افتراضي تمكين التمرين
+                isBreakEnabled: false    // افتراضي تمكين الاستراحة
             )
-            modelContext.insert(newPreferences) // إضافة الإعدادات الجديدة إلى modelContext
+            
+            // إضافة الإعدادات الجديدة إلى modelContext
+            modelContext.insert(newPreferences)
+            do {
+                try modelContext.save()  // حفظ البيانات
+            } catch {
+                print("Error saving preferences: \(error.localizedDescription)")
+            }
         }
     }
 }
