@@ -49,6 +49,7 @@ struct SessionView: View {
                     .onAppear {
                         loadPreferences()
                     }
+                
                     
                     Spacer(minLength: 70)
                     
@@ -60,6 +61,7 @@ struct SessionView: View {
                     Spacer(minLength: 70)
                     
                     NavigationLink(destination: ExerciseView()) {
+                        
                         HStack {
                             Text("Exercises")
                                 .foregroundColor(.white)
@@ -143,6 +145,12 @@ struct SessionView: View {
         }
     }
     
+    private func checkCameraPermission() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        DispatchQueue.main.async {
+            self.cameraPermissionDenied = (status == .denied || status == .restricted)
+        }
+    }
     private func loadPreferences() {
         // إذا كانت الإعدادات فارغة في SwiftData، قم بإنشاء إعدادات جديدة
         if preferences.isEmpty {

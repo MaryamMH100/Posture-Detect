@@ -1,3 +1,9 @@
+//
+//  PreferencesView.swift
+//  PostureDetect
+//
+//  Created by Reema ALhudaian on 06/09/1446 AH.
+//
 import Foundation
 import SwiftUI
 import SwiftData
