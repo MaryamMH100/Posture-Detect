@@ -32,7 +32,7 @@ struct PreferencesView: View {
     let notificationOptions = ["Once", "Twice", "Four times"]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 if isOnboarding {
                     Color.black.opacity(0.3)
