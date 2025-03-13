@@ -17,7 +17,7 @@ struct PreferencesView: View {
     @State private var filteredEndTimeOptions: [String] = []
     @Binding var showPreferences: Bool // Binding to control the sheet visibility
     @State static private var showPreferences = true // تم تعريف الحالة هنا
-    @State private var isPreferencesPage = true // لتحديد ما إذا كانت الصفحة هي الإعدادات أو لا
+
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
@@ -69,12 +69,11 @@ struct PreferencesView: View {
 
                                     .frame(width: 20.0, height: 20.0)
 .padding(8)
-
+                               
                     .background( Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
                                     
                                     
- 
                             }
                             
                             .buttonStyle(PlainButtonStyle())
@@ -158,18 +157,14 @@ struct PreferencesView: View {
                                 .padding()
                             )
                     }
+
                     Button(action: {
-                        if isPreferencesPage {
-                            // إذا كانت الصفحة هي الـ Preferences، نكمل الإعدادات
-                            savePreferences()
-                            hasCompletedPreferences = true
-                            navigateToSessionView = true
-                        } else {
-                            // إذا كنا في صفحة تانية، نكمل الإجراء المناسب
-                            savePreferences()
-                        }
+                        savePreferences()
+                        hasCompletedPreferences = true
+                        dismiss()
+                        navigateToSessionView = true
                     }) {
-                        Text(isPreferencesPage ? "Start" : "Save")
+                        Text("Save")
                             .bold()
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -179,31 +174,33 @@ struct PreferencesView: View {
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .padding()
-
-                    // هنا تقدر تضيف زر لعمل التنقل بين الصفحات (إذا كان تم إتمام الإعدادات)
-                    NavigationLink(
-                        destination: SessionView(),
-                        isActive: $navigateToSessionView
-                    ) {
-                        EmptyView() // لا شيء هنا لأننا نستخدم الزر للانتقال
-                    }
                 }
                 .padding()
+            
+                            
+            .padding()
                 .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
-                .onAppear {
-                    requestNotificationPermission()
-                    updateEndTimeOptions()
-                }
-                .navigationBarBackButtonHidden(isFirstTime)
             }
+        
+        .onAppear(perform: loadPreferences)
+        .onAppear {
+            requestNotificationPermission()
         }
-
+        .onAppear {
+            updateEndTimeOptions()
         }
-    
+        .navigationBarBackButtonHidden(isFirstTime)
+        .background(
+            NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
+                EmptyView()
+                
+            }
+        )
+        }
+    }
     
     private func updateEndTimeOptions() {
         let dateFormatter = DateFormatter()
