@@ -178,7 +178,7 @@ struct PreferencesView: View {
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
             }
-        }
+        
         .onAppear(perform: loadPreferences)
         .onAppear {
             requestNotificationPermission()
@@ -192,8 +192,9 @@ struct PreferencesView: View {
                 EmptyView()
             }
         )
+        }
     }
-    }
+    
     private func updateEndTimeOptions() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
