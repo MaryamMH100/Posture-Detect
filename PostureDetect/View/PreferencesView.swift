@@ -17,7 +17,7 @@ struct PreferencesView: View {
     @State private var filteredEndTimeOptions: [String] = []
     @Binding var showPreferences: Bool // Binding to control the sheet visibility
     @State static private var showPreferences = true // تم تعريف الحالة هنا
-
+    @State private var isPreferencesPage = true // لتحديد ما إذا كانت الصفحة هي الإعدادات أو لا
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
@@ -26,7 +26,7 @@ struct PreferencesView: View {
     @State private var isFirstTime = true
     @State private var navigateToSessionView = false
     var isOnboarding: Bool
-    @State private var isPreferencesPage = true
+
     let timeOptions = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]
     
     let notificationOptions = ["Once", "Twice", "Four times"]
@@ -158,9 +158,9 @@ struct PreferencesView: View {
                                 .padding()
                             )
                     }
-
                     Button(action: {
                         if isPreferencesPage {
+                            // إذا كانت الصفحة هي الـ Preferences، نكمل الإعدادات
                             savePreferences()
                             hasCompletedPreferences = true
                             navigateToSessionView = true
@@ -178,7 +178,6 @@ struct PreferencesView: View {
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
-                    
                     .buttonStyle(PlainButtonStyle())
                     .padding()
 
@@ -201,9 +200,10 @@ struct PreferencesView: View {
                 }
                 .navigationBarBackButtonHidden(isFirstTime)
             }
-        
         }
-    }
+
+        }
+    
     
     private func updateEndTimeOptions() {
         let dateFormatter = DateFormatter()
