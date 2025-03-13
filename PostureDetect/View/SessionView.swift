@@ -8,6 +8,7 @@
 
 import SwiftUI
 import _SwiftData_SwiftUI
+import AVFoundation
 
 struct SessionView: View {
     @StateObject private var viewModel = SessionViewModel()
@@ -145,12 +146,7 @@ struct SessionView: View {
         }
     }
     
-    private func checkCameraPermission() {
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
-        DispatchQueue.main.async {
-            self.cameraPermissionDenied = (status == .denied || status == .restricted)
-        }
-    }
+   
     private func loadPreferences() {
         // إذا كانت الإعدادات فارغة في SwiftData، قم بإنشاء إعدادات جديدة
         if preferences.isEmpty {
