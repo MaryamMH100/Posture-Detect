@@ -15,7 +15,9 @@ struct PreferencesView: View {
     @State private var startTime = "9:00 AM"
     @State private var endTime = "5:00 PM"
     @State private var filteredEndTimeOptions: [String] = []
-    @Binding var showPreferences: Bool
+    @Binding var showPreferences: Bool // Binding to control the sheet visibility
+    @State static private var showPreferences = true // تم تعريف الحالة هنا
+
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
@@ -51,7 +53,9 @@ struct PreferencesView: View {
                             }
                             .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
                             .padding(8)
+//                            .background(Color.white.opacity(0.8))
                             .cornerRadius(8)
+//                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                         } else {
                             Button(action: {
                                 dismiss()
@@ -61,11 +65,16 @@ struct PreferencesView: View {
                                     .foregroundColor(Color.white)
                                     .padding(8)
                                     .background(Color(red: 0.3, green: 0.44, blue: 0.27))
+.padding(8)
+                               
+                                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
                                     .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                             }
                             .buttonStyle(PlainButtonStyle())
+
                         }
+                        
                     }
                     .buttonStyle(PlainButtonStyle())
 
@@ -161,12 +170,15 @@ struct PreferencesView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 .padding()
+            
+                            
+            .padding()
                 .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
             }
-       
+        }
         .onAppear(perform: loadPreferences)
         .onAppear {
             requestNotificationPermission()
@@ -219,8 +231,8 @@ struct PreferencesView: View {
         }
         
         do {
-            try modelContext.save()
-            hasCompletedPreferences = true
+            try modelContext.save()  // حفظ البيانات
+            hasCompletedPreferences = true  // تم حفظ التفضيلات
         } catch {
             print("Error saving preferences: \(error.localizedDescription)")
         }
@@ -371,9 +383,9 @@ func requestNotificationPermission() {
 }
 
 struct PreferencesView_Previews: PreviewProvider {
-    @State static private var showPreferences = true
+    @State static private var showPreferences = true // تم تعريف الحالة هنا
     
     static var previews: some View {
-        PreferencesView(showPreferences: $showPreferences, isOnboarding: true)
+        PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
     }
 }
