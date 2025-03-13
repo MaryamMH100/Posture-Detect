@@ -153,6 +153,17 @@
         }
       }
     },
+    "Fix your posture👀" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدِّل وضعية جلوسك👀"
+          }
+        }
+      }
+    },
     "Forward Neck Stretch" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -255,6 +266,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "التالي"
+          }
+        }
+      }
+    },
+    "No slouching! 🚀" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تتراخى! 🚀"
           }
         }
       }
@@ -364,6 +386,17 @@
         }
       }
     },
+    "Sit up straight! 😊" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إجلس باستقامة! 😊"
+          }
+        }
+      }
+    },
     "Skip" : {
       "localizations" : {
         "ar" : {
@@ -420,6 +453,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ابقَ في الصورة!"
+          }
+        }
+      }
+    },
+    "Straighten your back! 🏋️‍♂️" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بتقويم ظهرك! 🏋️‍♂️"
           }
         }
       }

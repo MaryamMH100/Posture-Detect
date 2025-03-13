@@ -24,7 +24,7 @@ struct SessionAlerts: View {
     
     var body: some View {
         VStack {
-            Text(currentMessage)
+            Text(LocalizedStringKey(currentMessage))
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
                 .fontWeight(.bold)
