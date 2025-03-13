@@ -26,13 +26,13 @@ struct PreferencesView: View {
     @State private var isFirstTime = true
     @State private var navigateToSessionView = false
     var isOnboarding: Bool
-
+    @State private var isPreferencesPage = true
     let timeOptions = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]
     
     let notificationOptions = ["Once", "Twice", "Four times"]
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 if isOnboarding {
                     Color.black.opacity(0.3)
@@ -67,11 +67,14 @@ struct PreferencesView: View {
                                     .padding(8)
 //                                    .background(Color(red: 0.3, green: 0.44, blue: 0.27))
 
-                               
-                                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
+                                    .frame(width: 20.0, height: 20.0)
+.padding(8)
+
+                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
                                     
                                     
+ 
                             }
                             
                             .buttonStyle(PlainButtonStyle())
@@ -157,12 +160,16 @@ struct PreferencesView: View {
                     }
 
                     Button(action: {
-                        savePreferences()
-                        hasCompletedPreferences = true
-                        dismiss()
-                        navigateToSessionView = true
+                        if isPreferencesPage {
+                            savePreferences()
+                            hasCompletedPreferences = true
+                            navigateToSessionView = true
+                        } else {
+                            // إذا كنا في صفحة تانية، نكمل الإجراء المناسب
+                            savePreferences()
+                        }
                     }) {
-                        Text("Save")
+                        Text(isPreferencesPage ? "Start" : "Save")
                             .bold()
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -171,31 +178,30 @@ struct PreferencesView: View {
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
+                    
                     .buttonStyle(PlainButtonStyle())
+                    .padding()
+
+                    // هنا تقدر تضيف زر لعمل التنقل بين الصفحات (إذا كان تم إتمام الإعدادات)
+                    NavigationLink(
+                        destination: SessionView(),
+                        isActive: $navigateToSessionView
+                    ) {
+                        EmptyView() // لا شيء هنا لأننا نستخدم الزر للانتقال
+                    }
                 }
                 .padding()
-            
-                            
-            .padding()
                 .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
+                .onAppear {
+                    requestNotificationPermission()
+                    updateEndTimeOptions()
+                }
+                .navigationBarBackButtonHidden(isFirstTime)
             }
         
-        .onAppear(perform: loadPreferences)
-        .onAppear {
-            requestNotificationPermission()
-        }
-        .onAppear {
-            updateEndTimeOptions()
-        }
-        .navigationBarBackButtonHidden(isFirstTime)
-        .background(
-            NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
-                EmptyView()
-            }
-        )
         }
     }
     

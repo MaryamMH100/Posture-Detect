@@ -10,8 +10,10 @@
 //
 //  Created by Maryam on 25/02/2025.
 //
+
 import SwiftUI
-import SwiftData
+import Foundation
+//import SwiftData
 
 @main
 struct MyApp: App {
@@ -23,11 +25,11 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             if !hasCompletedOnboarding {
-                OnboardingView() // الصفحة الأولى: شاشة الـ Onboarding
+                OnboardingView()
             } else if !hasCompletedPreferences {
-                PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
+                PreferencesView(showPreferences: $showPreferences, isOnboarding: true)
             } else {
-                SessionView() // الصفحة الرئيسية
+                SessionView()
             }
         }
         .modelContainer(for: UserPreferences.self) // تهيئة SwiftData
