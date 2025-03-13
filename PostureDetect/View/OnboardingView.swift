@@ -95,7 +95,7 @@ struct OnboardingPage1: View {
                 .frame(width: 400, height: 250)
                 .padding(.top, 50)
             
-            Text("Welcome to “عدِّل”!")
+            Text("Welcome to Addel!")
                 .font(.title)
                 .foregroundColor(Color("fontColor"))
                 .offset(x: 0, y: 10)

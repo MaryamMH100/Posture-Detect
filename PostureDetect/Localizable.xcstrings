@@ -1,0 +1,521 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%@" : {
+
+    },
+    "%lld Seconds" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " %lld  ثانية"
+          }
+        }
+      }
+    },
+    "%lldm" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " %lld  دقيقة"
+          }
+        }
+      }
+    },
+    "⚠ Camera access is required to track your posture." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠ الوصول إلى الكاميرا مطلوب لتتبع وضعية جسمك."
+          }
+        }
+      }
+    },
+    "Back Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمدد الظهر"
+          }
+        }
+      }
+    },
+    "Blink Eye Exercise" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين رمش العين"
+          }
+        }
+      }
+    },
+    "Break" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاستراحة"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء"
+          }
+        }
+      }
+    },
+    "Closed-Eye Circular Motion Exercise" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين الحركة الدائرية للعيون المغلقة"
+          }
+        }
+      }
+    },
+    "End" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النهاية "
+          }
+        }
+      }
+    },
+    "End Exercises" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نهاية التمارين"
+          }
+        }
+      }
+    },
+    "Exercise" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التمرين"
+          }
+        }
+      }
+    },
+    "Exercises" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التمارين"
+          }
+        }
+      }
+    },
+    "Eyes Exercise" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين العين"
+          }
+        }
+      }
+    },
+    "Far Away Focus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التركيز في شئ بعيد"
+          }
+        }
+      }
+    },
+    "Forward Neck Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الرقبة للأمام"
+          }
+        }
+      }
+    },
+    "Four times" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اربعة مرات"
+          }
+        }
+      }
+    },
+    "General" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشعارات عامة"
+          }
+        }
+      }
+    },
+    "Left Neck Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الرقبة لليسار"
+          }
+        }
+      }
+    },
+    "Left Shoulders Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الأكتاف لليسار"
+          }
+        }
+      }
+    },
+    "Left Triceps Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد العضلة ثلاثية الرؤوس اليسرى"
+          }
+        }
+      }
+    },
+    "Maintain a healthy posture!" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حافظ على وضعية صحية!"
+          }
+        }
+      }
+    },
+    "minutes" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الدقائق"
+          }
+        }
+      }
+    },
+    "Neck Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمدد الرقبة"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التالي"
+          }
+        }
+      }
+    },
+    "Notifications frequency" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تكرار الإشعارات"
+          }
+        }
+      }
+    },
+    "Once" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرة واحدة"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توقف مؤقت"
+          }
+        }
+      }
+    },
+    "Preferences" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التفضيلات"
+          }
+        }
+      }
+    },
+    "Right Neck Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الرقبة لليمين"
+          }
+        }
+      }
+    },
+    "Right Shoulders Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الأكتاف لليمين"
+          }
+        }
+      }
+    },
+    "Right Triceps Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد العضلة ثلاثية الرؤوس اليمنى"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفظ"
+          }
+        }
+      }
+    },
+    "Session" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الجلسة"
+          }
+        }
+      }
+    },
+    "Shoulders Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمدد الأكتاف"
+          }
+        }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجاهل"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البداية"
+          }
+        }
+      }
+    },
+    "Start >" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إبدأ"
+          }
+        }
+      }
+    },
+    "Start Exercises" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بداية التمارين"
+          }
+        }
+      }
+    },
+    "Start the timer and track your posture" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ المؤقت وتابع وضعية جلوسك."
+          }
+        }
+      }
+    },
+    "Stay in the picture!" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابقَ في الصورة!"
+          }
+        }
+      }
+    },
+    "Time remaining: %lld sec" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوقت المتبقي:  %lld  ثانية"
+          }
+        }
+      }
+    },
+    "Twice" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرتين"
+          }
+        }
+      }
+    },
+    "Upward Neck Stretch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمرين تمديد الرقبة للخلف"
+          }
+        }
+      }
+    },
+    "We use the camera to analyze your posture with AI, without saving any images. Just a quick analysis to help you improve your sitting position." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نستخدم الكاميرا لتحليل وضعية جلوسك بالذكاء الاصطناعي دون حفظ أي صور. مجرد تحليل سريع لمساعدتك على تحسين جلستك."
+          }
+        }
+      }
+    },
+    "We’ll send you gentle notifications if your sitting posture needs adjustment or when it’s time for a break." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سنرسل لك إشعارات لطيفة إذا كنت بحاجة إلى تعديل جلستك أو عندما يحين وقت الاستراحة."
+          }
+        }
+      }
+    },
+    "We’ve prepared simple exercises to help you sit correctly and reduce strain and stress on your body." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد أعددنا تمارين بسيطة لمساعدتك على الجلوس بشكل صحيح وتقليل الإجهاد والتوتر على جسمك."
+          }
+        }
+      }
+    },
+    "Welcome to Addel!" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أهلاً بك في عدّل"
+          }
+        }
+      }
+    },
+    "Work hours" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ساعات العمل"
+          }
+        }
+      }
+    },
+    "Your smart assistant for detecting bad posters and improving awareness." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مساعدك الذكي لاكتشاف الجلسات الخاطئة وتحسين الوعي."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

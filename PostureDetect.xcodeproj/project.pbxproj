@@ -6,7 +6,21 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EC1DB4D82D835C1D009E8DBB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		EC1DB4C42D835C1C009E8DBB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ECEDB3012D6DC0D40040BDE1 /* PostureDetect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostureDetect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -42,10 +56,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC1DB4C12D835C1C009E8DBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC1DB4C42D835C1C009E8DBB /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ECEDB2F82D6DC0D40040BDE1 = {
 			isa = PBXGroup;
 			children = (
 				ECEDB3032D6DC0D40040BDE1 /* PostureDetect */,
+				EC1DB4C12D835C1C009E8DBB /* Frameworks */,
 				ECEDB3022D6DC0D40040BDE1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,6 +91,7 @@
 				ECEDB2FD2D6DC0D40040BDE1 /* Sources */,
 				ECEDB2FE2D6DC0D40040BDE1 /* Frameworks */,
 				ECEDB2FF2D6DC0D40040BDE1 /* Resources */,
+				EC1DB4D82D835C1D009E8DBB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -266,14 +290,14 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = H5B8Y4T9NK;
+				DEVELOPMENT_TEAM = 65SC85U354;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PostureDetect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Addel | عدِّل";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to detect your posture.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -297,14 +321,14 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = H5B8Y4T9NK;
+				DEVELOPMENT_TEAM = 65SC85U354;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PostureDetect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Addel | عدِّل";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to detect your posture.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

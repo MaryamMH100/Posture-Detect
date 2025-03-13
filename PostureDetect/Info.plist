@@ -5,8 +5,6 @@
 	<key>NSUserNotificationsUsageDescription</key>
 	<string> We need to send you notifications about your posture.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>We need the camera to detect your posture.</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.lifestyle</string>
+	<string>We need to access to camera to detect your posture in real time. </string>
 </dict>
 </plist>

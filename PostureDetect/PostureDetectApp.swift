@@ -19,12 +19,20 @@ import Foundation
 struct MyApp: App {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
-    @State private var showPreferences = false  // إضافة هذه السطر لتعريف showPreferences
+    @AppStorage("isFirstLaunchAfterReinstall") private var isFirstLaunchAfterReinstall = true
+    @State private var showPreferences = false
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
-            if !hasCompletedOnboarding {
+            if isFirstLaunchAfterReinstall {
+                OnboardingView()
+                    .onAppear {
+                        hasCompletedOnboarding = false
+                        hasCompletedPreferences = false
+                        isFirstLaunchAfterReinstall = false
+                    }
+            } else if !hasCompletedOnboarding {
                 OnboardingView()
             } else if !hasCompletedPreferences {
                 PreferencesView(showPreferences: $showPreferences, isOnboarding: true)
@@ -32,6 +40,6 @@ struct MyApp: App {
                 SessionView()
             }
         }
-        .modelContainer(for: UserPreferences.self) // تهيئة SwiftData
+        .modelContainer(for: UserPreferences.self)
     }
 }

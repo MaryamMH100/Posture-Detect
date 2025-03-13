@@ -16,7 +16,7 @@ struct ExerciseListView: View {
             if let currentExercise = viewModel.currentExercise {
                 Spacer()
                 
-                Text(currentExercise.name)
+                Text(LocalizedStringKey(currentExercise.name))
                     .font(.title)
                 Image(currentExercise.image)
                     .resizable()
@@ -33,7 +33,7 @@ struct ExerciseListView: View {
             
             
             if viewModel.isFinished { // Show "End" if exercises are finished
-                Text (category.name).font(.title)
+                Text (LocalizedStringKey(category.name)).font(.title)
               
                 Text("\(category.time) Seconds")
                     .font(.title2)
@@ -42,7 +42,7 @@ struct ExerciseListView: View {
 //                    .foregroundColor(.red)
                     .padding()
             } else if !viewModel.isActive { // Show "Start" only if timer is not active
-                Text (category.name).font(.title)
+                Text (LocalizedStringKey(category.name)).font(.title)
                 
                 Text("\(category.time) Seconds")
                     .font(.title2)
@@ -104,9 +104,8 @@ struct ExerciseListView: View {
             
         }
         .background(Color.clear)
-       //.background(Color("CustomGrey"))
         .ignoresSafeArea()
-        .navigationTitle(category.name)
+        .navigationTitle(LocalizedStringKey(category.name))
         .padding()
     }
 }

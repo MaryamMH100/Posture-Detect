@@ -17,7 +17,7 @@ struct PreferencesView: View {
     @State private var filteredEndTimeOptions: [String] = []
     @Binding var showPreferences: Bool // Binding to control the sheet visibility
     @State static private var showPreferences = true // تم تعريف الحالة هنا
-
+    
     @State private var notificationFrequency = "Once"
     @State private var isExerciseEnabled = true
     @State private var isBreakEnabled = false
@@ -26,11 +26,11 @@ struct PreferencesView: View {
     @State private var isFirstTime = true
     @State private var navigateToSessionView = false
     var isOnboarding: Bool
-
+    
     let timeOptions = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]
     
     let notificationOptions = ["Once", "Twice", "Four times"]
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -39,7 +39,8 @@ struct PreferencesView: View {
                         .edgesIgnoringSafeArea(.all)
                         .onTapGesture { dismiss() }
                 }
-
+                
+                
                 VStack(alignment: .leading, spacing: 20) {
                     HStack {
                         Text("Preferences").font(.largeTitle).bold().foregroundColor(.black)
@@ -53,9 +54,9 @@ struct PreferencesView: View {
                             }
                             .foregroundColor(Color(red: 0.3, green: 0.44, blue: 0.27))
                             .padding(8)
-//                            .background(Color.white.opacity(0.8))
+                            //                            .background(Color.white.opacity(0.8))
                             .cornerRadius(8)
-//                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
+                            //                            .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)
                         } else {
                             Button(action: {
                                 dismiss()
@@ -65,28 +66,30 @@ struct PreferencesView: View {
                                     .foregroundColor(Color.white)
                                     .frame(width:20, height:20)
                                     .padding(8)
-//                                    .background(Color(red: 0.3, green: 0.44, blue: 0.27))
-
-                                    .frame(width: 20.0, height: 20.0)
-.padding(8)
-                               
-                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
+                                    .background( Color(red: 0.3, green: 0.44, blue: 0.27))
                                     .clipShape(Circle())
+                                
+                                
+                                
+                                
                                     
+                                
+                                
                                     
+                                
                             }
                             
                             .buttonStyle(PlainButtonStyle())
                             
-
+                            
                         }
                         
                     }
                     .buttonStyle(PlainButtonStyle())
-
+                    
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Session").font(.headline).bold().foregroundColor(.black)
-
+                        
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color.white)
                             .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
@@ -105,7 +108,7 @@ struct PreferencesView: View {
                                         .onChange(of: startTime) { _ in
                                             updateEndTimeOptions()
                                         }
-
+                                        
                                         Picker("End", selection: $endTime) {
                                             ForEach(filteredEndTimeOptions, id: \.self) { time in
                                                 Text(time).foregroundColor(.black)
@@ -114,13 +117,13 @@ struct PreferencesView: View {
                                         .pickerStyle(MenuPickerStyle())
                                     }
                                     .onAppear(perform: loadPreferences)
-
+                                    
                                     HStack {
                                         Text("Notifications frequency").foregroundColor(.black)
                                         Spacer()
                                         Picker("", selection: $notificationFrequency) {
                                             ForEach(notificationOptions, id: \.self) { option in
-                                                Text(option).foregroundColor(.black)
+                                                Text(LocalizedStringKey(option)).foregroundColor(.black)
                                             }
                                         }
                                         .pickerStyle(MenuPickerStyle())
@@ -130,10 +133,10 @@ struct PreferencesView: View {
                                         .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
                                     }
                                 }
-                                .padding()
+                                    .padding()
                             )
                     }
-
+                    
                     VStack(alignment: .leading, spacing: 10) {
                         Text("General").font(.headline).bold().foregroundColor(.black)
                         RoundedRectangle(cornerRadius: 15)
@@ -147,17 +150,17 @@ struct PreferencesView: View {
                                         Spacer()
                                         CustomToggle(isOn: $isExerciseEnabled, activeColor: Color(red: 0.3, green: 0.44, blue: 0.27))
                                     }
-
+                                    
                                     HStack {
                                         Text("Break").foregroundColor(.black)
                                         Spacer()
                                         CustomToggle(isOn: $isBreakEnabled, activeColor: Color(red: 0.3, green: 0.44, blue: 0.27))
                                     }
                                 }
-                                .padding()
+                                    .padding()
                             )
                     }
-
+                    
                     Button(action: {
                         savePreferences()
                         hasCompletedPreferences = true
@@ -174,38 +177,44 @@ struct PreferencesView: View {
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .background(
+                        NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
+                            EmptyView()
+                        }
+                    )
                 }
                 .padding()
-            
-                            
-            .padding()
                 .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
-            }
-        
-        .onAppear(perform: loadPreferences)
-        .onAppear {
-            requestNotificationPermission()
-        }
-        .onAppear {
-            updateEndTimeOptions()
-        }
-        .navigationBarBackButtonHidden(isFirstTime)
-        .background(
-            NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
-                EmptyView()
+                
+                
+                
                 
             }
-        )
+            
+            .onAppear(perform: loadPreferences)
+            .onAppear {
+                requestNotificationPermission()
+            }
+            .onAppear {
+                updateEndTimeOptions()
+            }
+            .navigationBarBackButtonHidden(isFirstTime)
+//            .background(
+//                NavigationLink(destination: SessionView(), isActive: $navigateToSessionView) {
+//                    EmptyView()
+//                    
+//                }
+//            )
         }
     }
     
     private func updateEndTimeOptions() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
-
+        
         if let startDate = dateFormatter.date(from: startTime) {
             filteredEndTimeOptions = timeOptions.filter { timeString in
                 if let timeDate = dateFormatter.date(from: timeString) {
@@ -213,13 +222,13 @@ struct PreferencesView: View {
                 }
                 return false
             }
-
+            
             if let firstAvailableTime = filteredEndTimeOptions.first {
                 endTime = firstAvailableTime
             }
         }
     }
-
+    
     private func savePreferences() {
         if let existingPreferences = preferences.first {
             existingPreferences.startTime = startTime
@@ -245,7 +254,7 @@ struct PreferencesView: View {
             print("Error saving preferences: \(error.localizedDescription)")
         }
     }
-
+    
     private func loadPreferences() {
         if let existingPreferences = preferences.first {
             startTime = existingPreferences.startTime
@@ -256,7 +265,7 @@ struct PreferencesView: View {
             isFirstTime = false
         }
     }
-
+    
     private func scheduleNotifications() {
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
@@ -325,7 +334,7 @@ struct PreferencesView: View {
         
         print("Notifications scheduled.")
     }
-
+    
     private func scheduleSingleNotification(for type: String, during startDate: Date, endDate: Date, center: UNUserNotificationCenter) {
         var calendar = Calendar.current
         calendar.timeZone = TimeZone.current

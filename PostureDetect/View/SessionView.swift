@@ -21,6 +21,7 @@ struct SessionView: View {
     @AppStorage("hasCompletedPreferences") private var hasCompletedPreferences = false
     //    @State private var navigateToSessionView = true
     
+    
     var body: some View {
         NavigationStack {
             VStack {

@@ -67,7 +67,8 @@ struct ExerciseView: View {
                                             
                                             Divider()
                                             
-                                            Text(category.name)
+                                            //Text(category.name)
+                                            Text(LocalizedStringKey(category.name))
                                                 .font(.title2)
                                                 //.font(.headline)
                                                 .foregroundColor(.black)
@@ -119,5 +120,3 @@ struct ExerciseView: View {
         }
     }
 }
-
-
