@@ -9,24 +9,20 @@ import CoreML
 import Vision
 import CoreImage
 
-
 class PostureDetector {
     private var model: VNCoreMLModel?
-    
+
     init() {
         do {
-            // قم بتحميل النموذج من ملف .mlmodel
             let postureModel = try PostureDetectModel1(configuration: MLModelConfiguration()).model
             model = try VNCoreMLModel(for: postureModel)
         } catch {
             print("Failed to load model: \(error)")
         }
     }
-    
-    // دالة للكشف عن الوضعية من صورة معينة
+
     func detectPosture(from image: CIImage, completion: @escaping (String?, Float) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { // تشغيل في خيط خلفي
-            print("Detecting posture from image...")
+        DispatchQueue.global(qos: .userInitiated).async { // Run on background thread
             guard let model = self.model else {
                 DispatchQueue.main.async {
                     completion(nil, 0.0)
@@ -55,9 +51,10 @@ class PostureDetector {
                 }
             }
 
-            let handler = VNImageRequestHandler(ciImage: image)
+            let handler = VNImageRequestHandler(ciImage: image, options: [:])
+
             do {
-                try handler.perform([request]) // لم يعد على الخيط الرئيسي
+                try handler.perform([request])
             } catch {
                 print("Failed to perform classification: \(error)")
                 DispatchQueue.main.async {
@@ -66,5 +63,4 @@ class PostureDetector {
             }
         }
     }
-
 }

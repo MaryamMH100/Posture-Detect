@@ -10,9 +10,22 @@
 		ECEDB3012D6DC0D40040BDE1 /* PostureDetect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostureDetect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EC3BF22D2D806ABD00281EB1 /* Exceptions for "PostureDetect" folder in "PostureDetect" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = ECEDB3002D6DC0D40040BDE1 /* PostureDetect */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		ECEDB3032D6DC0D40040BDE1 /* PostureDetect */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EC3BF22D2D806ABD00281EB1 /* Exceptions for "PostureDetect" folder in "PostureDetect" target */,
+			);
 			path = PostureDetect;
 			sourceTree = "<group>";
 		};
@@ -253,18 +266,21 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = 4YDHCL9RDP;
+				DEVELOPMENT_TEAM = 65SC85U354;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to detect your posture.";
+				INFOPLIST_FILE = PostureDetect/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Addel | عدِّل";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.maryam.PostureDetect;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maryam.PostureDetector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -281,18 +297,21 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PostureDetect/Preview Content\"";
-				DEVELOPMENT_TEAM = 4YDHCL9RDP;
+				DEVELOPMENT_TEAM = 65SC85U354;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to detect your posture.";
+				INFOPLIST_FILE = PostureDetect/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Addel | عدِّل";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.maryam.PostureDetect;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maryam.PostureDetector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -10,132 +10,114 @@ struct CircularSlider: View {
     let startAngle: Double = 240 // Start at 240° (but moving counterclockwise)
     let endAngle: Double = 300 // End at 300°
     let totalAngle: Double = 360 - 60 // Covers almost full circle except gap
-
+    
     var body: some View {
-        GeometryReader { geometry in
-            let size = min(geometry.size.width, geometry.size.height)
-            let radius = size / 2
-            let progress = timeRemaining / 30
-            let currentAngle = startAngle - (progress * totalAngle) // Move counterclockwise
+        ZStack {
+            Circle()
+                .foregroundColor(.white)
 
-            ZStack {
-                Circle()
-                    .foregroundColor(.white)
+            // Background Circle
+            Circle()
+                .stroke(Color("disableButton"), lineWidth: 20)
 
-                // Background Circle
-                Circle()
-                    .stroke(Color("disableButton"), lineWidth: 20)
+            // Progress Arc (skipping 250° - 290°)
+            Path { path in
+                let progress = timeRemaining / 30
+                let progressEndAngle = startAngle - (progress * totalAngle) // Counterclockwise angle
 
-                // Progress Arc (skipping 250° - 290°)
-                Path { path in
-                    let progressEndAngle = startAngle - (progress * totalAngle) // Counterclockwise angle
+                for angle in stride(from: 240, to: progressEndAngle, by: -1) { // Moving counterclockwise
+                    if angle < 250 || angle > 290 { // Skip the gap
+                        let radian = angle * .pi / 180
+                        let x = 225 + 225 * cos(radian)
+                        let y = 225 + 225 * sin(radian)
 
-                    for angle in stride(from: 240, to: progressEndAngle, by: -1) { // Moving counterclockwise
-                        if angle < 250 || angle > 290 { // Skip the gap
-                            let radian = angle * .pi / 180
-                            let x = radius + radius * cos(radian)
-                            let y = radius + radius * sin(radian)
-
-                            if angle == 240 {
-                                path.move(to: CGPoint(x: x, y: y))
-                            } else {
-                                path.addLine(to: CGPoint(x: x, y: y))
-                            }
+                        if angle == 240 {
+                            path.move(to: CGPoint(x: x, y: y))
+                        } else {
+                            path.addLine(to: CGPoint(x: x, y: y))
                         }
                     }
                 }
-                .stroke(Color("StrokeColor"), style: StrokeStyle(lineWidth: 20, lineCap: .round))
-                .animation(.easeInOut(duration: 0.2), value: timeRemaining)
-                
-                
+            }
+            .stroke(Color("StrokeColor"), style: StrokeStyle(lineWidth: 20, lineCap: .round))
+            .animation(.easeInOut(duration: 0.2), value: timeRemaining)
 
-                // Minute Markers (Clickable)
-                ForEach(markers, id: \.self) { minute in
-                    let angle = startAngle - (Double(minute) / 30 * totalAngle)
-                    if angle < 250 || angle > 290 { // Skip the gap
-                        let x = radius + radius * cos(angle * .pi / 180)
-                        let y = radius + radius * sin(angle * .pi / 180)
-
-                        Text("\(Int(minute) == 0 ? "0" : "\(Int(minute))m")")
-                            .font(.system(size: 30, weight: .bold))
-                            .foregroundColor(.clear)
-                            .position(x: x, y: y)
-                            .onTapGesture {
-                                selectedTime = Double(minute)
-                                timeRemaining = selectedTime
-                            }
-                    }
-                }
-                
-                
-                ForEach(0..<7) { index in
-                    let minute = Double(index * 5)
-                    let angle = startAngle - (minute / 30 * totalAngle)
-                    let outerRadius = radius + 55 // Position it outside the main circle
-
-                    let x = outerRadius * cos(angle * .pi / 180) + radius
-                    let y = outerRadius * sin(angle * .pi / 180) + radius
+            // Minute Markers (Clickable)
+            ForEach(markers, id: \.self) { minute in
+                let angle = startAngle - (Double(minute) / 30 * totalAngle)
+                if angle < 250 || angle > 290 { // Skip the gap
+                    let x = 225 + 225 * cos(angle * .pi / 180)
+                    let y = 225 + 225 * sin(angle * .pi / 180)
 
                     Text("\(Int(minute) == 0 ? "0" : "\(Int(minute))m")")
-                        .font(.system(size: 30, weight: .bold)) // Bigger font size
-                        .foregroundColor(.black)
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundColor(.clear)
                         .position(x: x, y: y)
-                }
-
-                // Draggable Handle
-                Circle()
-                    .fill(Color("StrokeColor"))
-                    .frame(width: 40, height: 40)
-                    .offset(
-                        x: radius * cos(currentAngle * .pi / 180),
-                        y: radius * sin(currentAngle * .pi / 180)
-                    )
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                let vector = CGVector(
-                                    dx: value.location.x - radius,
-                                    dy: value.location.y - radius
-                                )
-                                let angle = atan2(vector.dy, vector.dx) * 180 / .pi
-                                let adjustedAngle = (angle < 0 ? angle + 360 : angle)
-
-                                // Ensure angle is within allowed range (except skipped section)
-                                if (adjustedAngle < 250 || adjustedAngle > 290) {
-                                    let time = (startAngle - adjustedAngle) / totalAngle * 30
-
-                                    // Snap to nearest marker
-                                    let snappedTime = markers.map { Double($0) }
-                                        .min(by: { abs($0 - time) < abs($1 - time) }) ?? time
-
-                                    selectedTime = min(max(snappedTime, 0), 30)
-                                    timeRemaining = selectedTime
-                                }
-                            }
-                    )
-
-                // Timer text
-                VStack {
-                    if timerRunning {
-                        // Display time in mm:ss format when the timer is running
-                        Text(timeString(from: timeRemaining))
-                            .font(.system(size: 96, weight: .bold))
-                            .foregroundColor(Color("StrokeColor"))
-                    } else {
-                        // Display time in minutes only when the timer is not running
-                        Text("\(Int(selectedTime))")
-                            .font(.system(size: 96, weight: .bold))
-                            .foregroundColor(Color("StrokeColor"))
-                    }
-
-                    Text("minutes")
-                        .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(Color("StrokeColor"))
+                        .onTapGesture {
+                            selectedTime = Double(minute)
+                            timeRemaining = selectedTime
+                        }
                 }
             }
-            .frame(width: size, height: size)
-            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            
+            
+            ForEach(0..<7) { index in
+                let minute = Double(index * 5)
+                let angle = startAngle - (minute / 30 * totalAngle)
+                let outerRadius: CGFloat = 200 + 70 // Position it outside the main circle
+
+                let x = 225 + outerRadius * cos(angle * .pi / 180)
+                let y = 225 + outerRadius * sin(angle * .pi / 180)
+
+                Text("\(Int(minute) == 0 ? "0" : "\(Int(minute))m")")
+                    .font(.system(size: 30, weight: .bold)) // Bigger font size
+                    .foregroundColor(.black)
+                    .position(x: x, y: y)
+            }
+            // Draggable Handle
+            Circle()
+                .fill(Color("StrokeColor"))
+                .frame(width: 40, height: 40)
+                .offset(
+                    x: 225 * cos((startAngle - (timeRemaining / 30 * totalAngle)) * .pi / 180),
+                    y: 225 * sin((startAngle - (timeRemaining / 30 * totalAngle)) * .pi / 180)
+                )
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            let vector = CGVector(
+                                dx: value.location.x - 225,
+                                dy: value.location.y - 225
+                            )
+                            let angle = atan2(vector.dy, vector.dx) * 180 / .pi
+                            let adjustedAngle = (angle < 0 ? angle + 360 : angle)
+
+                            // Ensure angle is within allowed range (except skipped section)
+                            if (adjustedAngle < 250 || adjustedAngle > 290) {
+                                let time = (startAngle - adjustedAngle) / totalAngle * 30
+
+                                // Snap to nearest marker
+                                let snappedTime = markers.map { Double($0) }
+                                    .min(by: { abs($0 - time) < abs($1 - time) }) ?? time
+
+                                selectedTime = min(max(snappedTime, 0), 30)
+                                timeRemaining = selectedTime
+                            }
+                        }
+                )
+
+            // Timer text
+            VStack {
+                Text("\((timeString(from: timeRemaining)))")
+                    .font(.system(size: 96, weight: .bold))
+                    .foregroundColor(Color("StrokeColor"))
+
+                Text("minutes")
+                    .font(.system(size: 36, weight: .bold))
+                    .foregroundColor(Color("StrokeColor"))
+            }
         }
+        .frame(width: 450, height: 450)
     }
 
     // Helper function to convert time in minutes to mm:ss format

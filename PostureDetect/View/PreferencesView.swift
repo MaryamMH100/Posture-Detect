@@ -47,6 +47,7 @@ struct PreferencesView: View {
                 
                 HStack {
                     Text("Preferences").font(.largeTitle).bold()
+                        .foregroundColor(.black)
                     Spacer()
                     
                     if isFirstTime {

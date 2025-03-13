@@ -43,9 +43,12 @@ struct ExerciseView: View {
             GeometryReader { geometry in
                 let columns = [GridItem(.adaptive(minimum: 300, maximum: 400), spacing: 15)]
                 
+                
                 ScrollView {
+                    Spacer(minLength: 100)
                     HStack {
-                        Spacer()
+                        Spacer(
+                        )
                         LazyVGrid(columns: columns, spacing: 15) {
                             ForEach(categories) { category in
                                 NavigationLink(destination: ExerciseListView(category: category)) {
