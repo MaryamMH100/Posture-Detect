@@ -32,9 +32,7 @@ struct MyApp: App {
                         hasCompletedPreferences = false
                         isFirstLaunchAfterReinstall = false
                     }
-            } else if !hasCompletedOnboarding {
-                OnboardingView()
-            }  else {
+            } else {
                 SessionView()
             }
         }
