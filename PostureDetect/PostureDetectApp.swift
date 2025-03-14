@@ -34,9 +34,7 @@ struct MyApp: App {
                     }
             } else if !hasCompletedOnboarding {
                 OnboardingView()
-            } else if !hasCompletedPreferences {
-                PreferencesView(showPreferences: $showPreferences, isOnboarding: true)
-            } else {
+            }  else {
                 SessionView()
             }
         }

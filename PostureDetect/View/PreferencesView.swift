@@ -105,6 +105,7 @@ struct PreferencesView: View {
                                             }
                                         }
                                         .pickerStyle(MenuPickerStyle())
+                                        .foregroundColor(.black)
                                         .onChange(of: startTime) { _ in
                                             updateEndTimeOptions()
                                         }
@@ -115,6 +116,7 @@ struct PreferencesView: View {
                                             }
                                         }
                                         .pickerStyle(MenuPickerStyle())
+                                        .foregroundColor(.black)
                                     }
                                     .onAppear(perform: loadPreferences)
                                     

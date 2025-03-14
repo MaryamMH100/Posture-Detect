@@ -11,65 +11,77 @@ struct OnboardingView: View {
 
 
     var body: some View {
+        NavigationStack{
         VStack {
-            if showPreferences {
-                PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
-            
-            } else {
-                ZStack {
-                    // Background color applied first
-                    Color("BackgroundColor")
-                        .ignoresSafeArea()
-                    
-                    VStack {
-                        HStack {
-                            Spacer()
-                            if viewModel.currentPageIndex < 3 {
-                                Button(action: {
-                                    viewModel.hasCompleted = true
-                                    showPreferences = true
-                                }) {
-                                    Text("Skip")
-                                        .font(.system(size: 16, weight: .medium))
-                                        .foregroundColor(Color("fontColor"))
-                                        .padding()
-                                        .padding(.top, 0)
-                                        .padding(.trailing, 5)
-                                }
-                                .background(Color.clear) // Ensure NO background
-                                .buttonStyle(.plain) // Remove default button style
-                            }
-                        }
-                        
-                        VStack(spacing: 20) {
-                            switch viewModel.currentPageIndex {
-                            case 0: OnboardingPage1()
-                            case 1: OnboardingPage2()
-                            case 2: OnboardingPage3()
-                            case 3: OnboardingPage4()
-                            default: OnboardingPage1()
-                            }
-                        }
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .trailing),
-                            removal: .move(edge: .leading)
-                        ))
-                        
+            //            if showPreferences {
+            //                PreferencesView(showPreferences: $showPreferences, isOnboarding: true) // تم تمرير Binding<Bool>
+            //
+            //            } else {
+            ZStack {
+                // Background color applied first
+                Color("BackgroundColor")
+                    .ignoresSafeArea()
+                
+                VStack {
+                    HStack {
                         Spacer()
-                        
-                        Button(action: {
-                            if viewModel.currentPageIndex == 3 {
+                        if viewModel.currentPageIndex < 3 {
+                            Button(action: {
+                                viewModel.hasCompleted = true
                                 showPreferences = true
-                            } else {
-                                viewModel.handleNext()
+                            }) {
+                                Text("Skip")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(Color("fontColor"))
+                                    .padding()
+                                    .padding(.top, 0)
+                                    .padding(.trailing, 5)
                             }
+                            .background(Color.clear) // Ensure NO background
+                            .buttonStyle(.plain) // Remove default button style
+                        }
+                    }
+                    
+                    VStack(spacing: 20) {
+                        switch viewModel.currentPageIndex {
+                        case 0: OnboardingPage1()
+                        case 1: OnboardingPage2()
+                        case 2: OnboardingPage3()
+                        case 3: OnboardingPage4()
+                        default: OnboardingPage1()
+                        }
+                    }
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                    
+                    Spacer()
+                    
+                    if viewModel.currentPageIndex == 3 {
+                        NavigationLink(destination: SessionView()
+                        ){
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(Color("fontColor"))
+                                    .frame(width: 700, height: 40)
+                                
+                                Text("Start")
+                                    .font(.system(size: 20, weight: .regular))
+                                    .foregroundColor(.white)
+                                    .padding(.bottom, 1)
+                            }
+                        }
+                    } else {
+                        Button(action: {
+                            viewModel.handleNext()
                         }) {
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(Color("fontColor"))
                                     .frame(width: 700, height: 40)
                                 
-                                Text(viewModel.currentPageIndex == 3 ? "Start" : "Next")
+                                Text("Next")
                                     .font(.system(size: 20, weight: .regular))
                                     .foregroundColor(.white)
                                     .padding(.bottom, 1)
@@ -77,12 +89,16 @@ struct OnboardingView: View {
                         }
                         .cornerRadius(35)
                     }
-                    .padding(.bottom, 70)
+                    
+                
                 }
-                .frame(width: 1300, height: 700)
+                .padding(.bottom, 70)
             }
+            .frame(width: 1300, height: 700)
+            
         }
         .animation(.easeInOut, value: showPreferences)
+    }
     }
 }
 
