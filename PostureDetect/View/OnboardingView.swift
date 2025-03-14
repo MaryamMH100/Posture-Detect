@@ -28,7 +28,7 @@ struct OnboardingView: View {
                         if viewModel.currentPageIndex < 3 {
                             Button(action: {
                                 viewModel.hasCompleted = true
-//                                showPreferences = true
+                                showPreferences = true
                             }) {
                                 Text("Skip")
                                     .font(.system(size: 16, weight: .medium))
@@ -59,10 +59,8 @@ struct OnboardingView: View {
                     Spacer()
                     
                     if viewModel.currentPageIndex == 3 {
-                        
                         NavigationLink(destination: SessionView()
                         ){
-                            
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(Color("fontColor"))
@@ -74,11 +72,12 @@ struct OnboardingView: View {
                                     .padding(.bottom, 1)
                             }
                         }
-                       
                     } else {
                         Button(action: {
+                            
+                            
                             viewModel.handleNext()
-//                            viewModel.hasCompleted = true
+                            
                         }) {
                             ZStack {
                                 Rectangle()
@@ -94,14 +93,14 @@ struct OnboardingView: View {
                         .cornerRadius(35)
                     }
                     
-                
+                    
                 }
                 .padding(.bottom, 70)
             }
             .frame(width: 1300, height: 700)
             
         }
-//        .animation(.easeInOut, value: showPreferences)
+        .animation(.easeInOut, value: showPreferences)
     }
     }
 }

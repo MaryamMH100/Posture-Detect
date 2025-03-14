@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>97</string>
+					<string>207</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>96</string>
+					<string>207</string>
 					<key>Timestamp</key>
-					<string>763681642.974364</string>
+					<string>763683334.26564</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,17 +34,13 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>                
-</string>
+				<string></string>
 				<key>leading</key>
-				<string>                    }
-                    
+				<string>        .frame(minWidth: 1440, minHeight: 900)
+}
 </string>
 				<key>trailing</key>
-				<string>                }
-                .padding(.bottom, 70)
-            }
-</string>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>
